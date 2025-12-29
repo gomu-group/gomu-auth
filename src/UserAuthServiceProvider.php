@@ -7,7 +7,7 @@ namespace Gomu\Auth;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class GomuAuthServiceProvider extends PackageServiceProvider
+class UserAuthServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {

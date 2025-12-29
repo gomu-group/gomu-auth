@@ -33,7 +33,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Gomu\\Auth\\GomuAuthServiceProvider"
+                "Gomu\\Auth\\UserAuthServiceProvider"
             ]
         }
     },
