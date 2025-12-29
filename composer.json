@@ -1,0 +1,50 @@
+{
+    "name": "gomu/gomuauth",
+    "description": "GomuAuth package for authentication",
+    "license": "proprietary",
+    "type": "library",
+    "require": {
+        "php": "^8.1",
+        "filament/filament": "^3.0",
+        "jenssegers/agent": "^2.6",
+        "laravel/sanctum": "^3.0|^4.0",
+        "spatie/laravel-package-tools": "^1.15"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.0",
+        "orchestra/testbench": "^9.0",
+        "roave/security-advisories": "dev-latest"
+    },
+    "autoload": {
+        "psr-4": {
+            "Gomu\\Auth\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Gomu\\Auth\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "analyse": "vendor/bin/psalm",
+        "test": "vendor/bin/phpunit",
+        "format": "vendor/bin/pint"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Gomu\\Auth\\GomuAuthServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "optimize-autoloader": true,
+        "platform": {
+            "php": "8.4.16"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

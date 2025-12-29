@@ -1,0 +1,13 @@
+/vendor
+/.phpunit.cache
+/.idea
+
+composer.lock
+.phpunit.result.cache
+
+
+# Github Action
+DOCKER_ENV
+Dockerfile-php-build
+docker_tag
+output.log
