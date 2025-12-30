@@ -3,6 +3,7 @@
     "description": "GomuAuth package for authentication",
     "license": "proprietary",
     "type": "library",
+    "version": "1.0.0",
     "require": {
         "php": "^8.1",
         "filament/filament": "^3.0",
@@ -45,6 +46,6 @@
             "php": "8.4.16"
         }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true
 }
