@@ -12,23 +12,23 @@ final class Routes
 {
     public static function authToken(): void
     {
-        Route::post('/auth/token', [TokenAuthController::class, 'store']);
-        Route::post('/auth/register', [TokenAuthController::class, 'register']);
-        Route::delete('/auth/token', [TokenAuthController::class, 'destroy'])->middleware('auth:sanctum');
+        Route::post('/token', [TokenAuthController::class, 'store']);
+        Route::post('/register', [TokenAuthController::class, 'register']);
+        Route::delete('/token', [TokenAuthController::class, 'destroy'])->middleware('auth:sanctum');
     }
 
     public static function internalAuthToken(): void
     {
-        Route::post('/auth/internal/token', [TokenAuthController::class, 'storeInternal']);
-        Route::post('/auth/internal/register', [TokenAuthController::class, 'registerInternal']);
-        Route::delete('/auth/internal/token', [TokenAuthController::class, 'destroy'])->middleware('auth:sanctum');
+        Route::post('/internal/token', [TokenAuthController::class, 'storeInternal']);
+        Route::post('/internal/register', [TokenAuthController::class, 'registerInternal']);
+        Route::delete('/internal/token', [TokenAuthController::class, 'destroy'])->middleware('auth:sanctum');
     }
 
     public static function externalAuthToken(): void
     {
-        Route::post('/auth/external/token', [TokenAuthController::class, 'storeExternal']);
-        Route::post('/auth/external/register', [TokenAuthController::class, 'registerExternal']);
-        Route::delete('/auth/external/token', [TokenAuthController::class, 'destroy'])->middleware('auth:external');
+        Route::post('/external/token', [TokenAuthController::class, 'storeExternal']);
+        Route::post('/external/register', [TokenAuthController::class, 'registerExternal']);
+        Route::delete('/external/token', [TokenAuthController::class, 'destroy'])->middleware('auth:sanctum');
     }
 
     public static function userProfile(): void

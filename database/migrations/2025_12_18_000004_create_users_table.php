@@ -12,10 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Create the 'account' schema if it doesn't exist
-        DB::statement('CREATE SCHEMA IF NOT EXISTS account');
-
-        Schema::create('account.users', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('username', 50)->nullable()->unique();
             $table->string('email', 100)->unique();
@@ -25,6 +22,7 @@ return new class extends Migration
             $table->uuid('role_id')->nullable();
             $table->timestamp('last_login')->nullable();
             $table->timestamps();
+            $table->rememberToken();
             $table->softDeletes();
 
             $table->index('username');
@@ -33,13 +31,13 @@ return new class extends Migration
             // $table->foreign('role_id')->references('id')->on('roles')->onDelete('set null');
         });
 
-        Schema::create('account.password_reset_tokens', function (Blueprint $table) {
+        Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');
             $table->timestamp('created_at')->nullable();
         });
 
-        Schema::create('account.sessions', function (Blueprint $table) {
+        Schema::create('sessions', function (Blueprint $table) {
             $table->string('id')->primary();
             $table->uuid('user_id')->nullable()->index();
             $table->string('ip_address', 45)->nullable();
@@ -47,7 +45,7 @@ return new class extends Migration
             $table->longText('payload');
             $table->integer('last_activity')->index();
 
-            $table->foreign('user_id')->references('id')->on('account.users')->onDelete('set null');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
         });
     }
 
@@ -56,9 +54,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('account.sessions');
-        Schema::dropIfExists('account.password_reset_tokens');
-        Schema::dropIfExists('account.users');
-        DB::statement('DROP SCHEMA IF EXISTS account CASCADE');
+        Schema::dropIfExists('sessions');
+        Schema::dropIfExists('password_reset_tokens');
+        Schema::dropIfExists('users');
     }
 };

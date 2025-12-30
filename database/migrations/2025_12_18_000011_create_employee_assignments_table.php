@@ -12,8 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        DB::statement('CREATE SCHEMA IF NOT EXISTS account');
-        Schema::create('account.employee_assignments', function (Blueprint $table) {
+        Schema::create('employee_assignments', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('employee_id');
             $table->uuid('position_id');
@@ -25,8 +24,8 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('employee_id')->references('id')->on('account.employees')->onDelete('restrict');
-            $table->foreign('position_id')->references('id')->on('account.job_positions')->onDelete('restrict');
+            $table->foreign('employee_id')->references('id')->on('employees')->onDelete('restrict');
+            $table->foreign('position_id')->references('id')->on('job_positions')->onDelete('restrict');
             $table->index('employee_id');
             $table->index('start_date');
         });
@@ -37,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('account.employee_assignments');
+        Schema::dropIfExists('employee_assignments');
     }
 };

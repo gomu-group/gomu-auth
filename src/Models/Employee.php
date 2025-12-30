@@ -6,15 +6,14 @@ namespace Gomu\Auth\Models;
 
 use App\Models\EmployeeReport;
 use App\Models\LeaveRequest;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 class Employee extends Model
 {
-    use SoftDeletes;
-
-    protected $connection = 'auth';
+    use SoftDeletes, HasFactory;
 
     public $incrementing = false;
     protected $keyType = 'string';
@@ -22,7 +21,13 @@ class Employee extends Model
 
     public function getTable()
     {
-        return config('gomu-auth.schema', 'account') . '.' . $this->table;
+        $schema = config('gomu-auth.schema');
+        return $schema ? $schema . '.' . $this->table : $this->table;
+    }
+
+    protected static function newFactory()
+    {
+        return \Database\Factories\EmployeeFactory::new();
     }
 
     protected $fillable = [

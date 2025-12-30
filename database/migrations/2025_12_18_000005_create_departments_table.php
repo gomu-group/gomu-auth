@@ -12,10 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Create the 'account' schema if it doesn't exist
-        DB::statement('CREATE SCHEMA IF NOT EXISTS account');
-
-        Schema::create('account.departments', function (Blueprint $table) {
+        Schema::create('departments', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name', 100);
             $table->string('code', 20)->unique();
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('account.departments');
+        Schema::dropIfExists('departments');
     }
 };

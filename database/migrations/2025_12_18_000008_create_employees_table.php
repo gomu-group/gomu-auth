@@ -12,8 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        DB::statement('CREATE SCHEMA IF NOT EXISTS account');
-        Schema::create('account.employees', function (Blueprint $table) {
+        Schema::create('employees', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('user_id')->nullable();
             $table->uuid('department_id')->nullable();
@@ -38,8 +37,12 @@ return new class extends Migration
             $table->index('nik');
             $table->index('full_name');
             $table->unique('user_id');
-            $table->foreign('user_id')->references('id')->on('account.users')->onDelete('set null');
-            $table->foreign('department_id')->references('id')->on('account.departments')->onDelete('set null');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('department_id')->references('id')->on('departments')->onDelete('set null');
+            $table->uuid('job_level_id')->nullable();
+            $table->uuid('job_position_id')->nullable();
+            $table->foreign('job_level_id')->references('id')->on('job_levels')->onDelete('set null');
+            $table->foreign('job_position_id')->references('id')->on('job_positions')->onDelete('set null');
         });
     }
 
@@ -48,6 +51,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('account.employees');
+        Schema::dropIfExists('employees');
     }
 };

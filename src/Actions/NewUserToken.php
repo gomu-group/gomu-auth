@@ -10,7 +10,7 @@ use Jenssegers\Agent\Agent;
 use Illuminate\Http\Request;
 use Laravel\Sanctum\NewAccessToken;
 use Illuminate\Contracts\Auth\Factory;
-use Berry\Auth\Models\User;
+use Gomu\Auth\Models\User;
 
 final class NewUserToken
 {
@@ -26,7 +26,7 @@ final class NewUserToken
     {
         $guard = $this->auth->guard();
 
-        if (\config('berry-auth.hashing_password_before_attempt', true)) {
+        if (\config('gomu-auth.hashing_password_before_attempt', true)) {
             $plainPassword = Arr::get($credentials, 'password');
 
             Arr::set($credentials, 'password', \md5($plainPassword));

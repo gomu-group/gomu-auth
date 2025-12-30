@@ -15,9 +15,7 @@ class UserAuthServiceProvider extends PackageServiceProvider
             ->name('gomuauth')
             ->hasConfigFile('gomu-auth')
             ->hasMigrations([
-                '2025_12_18_000001_create_roles_table',
                 '2025_12_18_000002_create_permissions_table',
-                '2025_12_18_000003_create_role_permissions_table',
                 '2025_12_18_000004_create_users_table',
                 '2025_12_18_000005_create_departments_table',
                 '2025_12_18_000006_create_job_levels_table',
@@ -36,15 +34,23 @@ class UserAuthServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void
     {
+        // Register factories
+        $this->loadFactoriesFrom(__DIR__.'/../database/factories');
+
         $router = $this->app['router'];
         $router->aliasMiddleware('gomu.internal', \Gomu\Auth\Http\Middleware\CheckUserType::class . ':internal');
         $router->aliasMiddleware('gomu.external', \Gomu\Auth\Http\Middleware\CheckUserType::class . ':external');
 
-        Routes::authToken();
-        Routes::userProfile();
-        Routes::internalAuthToken();
-        Routes::internalUserProfile();
-        Routes::externalAuthToken();
-        Routes::externalUserProfile();
+        \Illuminate\Support\Facades\Route::group(['prefix' => 'auth'], function () {
+            Routes::authToken();
+            Routes::internalAuthToken();
+            Routes::externalAuthToken();
+        });
+
+        \Illuminate\Support\Facades\Route::group([], function () {
+            Routes::userProfile();
+            Routes::internalUserProfile();
+            Routes::externalUserProfile();
+        });
     }
 }

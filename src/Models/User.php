@@ -19,13 +19,17 @@ class User extends Authenticatable implements FilamentUser, HasName
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, SoftDeletes, HasApiTokens;
-
-    protected $connection = 'auth';
     protected $table = 'users';
 
     public function getTable()
     {
-        return config('gomu-auth.schema', 'account') . '.' . $this->table;
+        $schema = config('gomu-auth.schema');
+        return $schema ? $schema . '.' . $this->table : $this->table;
+    }
+
+    protected static function newFactory()
+    {
+        return \Database\Factories\UserFactory::new();
     }
 
     /**

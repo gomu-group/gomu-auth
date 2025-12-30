@@ -23,7 +23,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Gomu\\Auth\\Tests\\": "tests/"
+            "Gomu\\Auth\\Tests\\": "tests/",
+            "Database\\Factories\\": "database/factories/"
         }
     },
     "scripts": {
