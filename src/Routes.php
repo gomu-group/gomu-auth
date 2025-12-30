@@ -7,6 +7,8 @@ namespace Gomu\Auth;
 use Illuminate\Support\Facades\Route;
 use Gomu\Auth\Http\Controllers\ProfileController;
 use Gomu\Auth\Http\Controllers\TokenAuthController;
+use Gomu\Auth\Http\Controllers\UserController;
+use Gomu\Auth\Http\Controllers\EmployeeController;
 
 final class Routes
 {
@@ -43,9 +45,13 @@ final class Routes
             ->get('/internal/user-information', [ProfileController::class, 'show']);
     }
 
-    public static function externalUserProfile(): void
+    public static function userManagement(): void
     {
-        Route::middleware(['auth:sanctum', 'berry.external'])
-            ->get('/external/user-information', [ProfileController::class, 'show']);
+        Route::apiResource('users', UserController::class);
+    }
+
+    public static function employeeManagement(): void
+    {
+        Route::apiResource('employees', EmployeeController::class);
     }
 }

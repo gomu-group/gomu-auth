@@ -72,6 +72,16 @@ class Employee extends Model
         return $this->belongsTo(Department::class);
     }
 
+    public function jobLevel()
+    {
+        return $this->belongsTo(JobLevel::class);
+    }
+
+    public function jobPosition()
+    {
+        return $this->belongsTo(JobPosition::class);
+    }
+
     public function assignments()
     {
         return $this->hasMany(EmployeeAssignment::class);

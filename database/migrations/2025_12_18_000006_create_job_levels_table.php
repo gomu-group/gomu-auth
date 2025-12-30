@@ -16,6 +16,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('level_name', 50);
             $table->integer('level_rank')->unique();
+            $table->timestamps();
             $table->softDeletes();
 
             $table->index('level_rank');

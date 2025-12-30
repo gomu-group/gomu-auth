@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('title', 100);
             $table->uuid('department_id');
             $table->uuid('job_level_id');
+            $table->timestamps();
             $table->softDeletes();
 
             $table->foreign('department_id')->references('id')->on('departments')->onDelete('restrict');

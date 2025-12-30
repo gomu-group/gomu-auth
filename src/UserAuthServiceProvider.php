@@ -47,10 +47,11 @@ class UserAuthServiceProvider extends PackageServiceProvider
             Routes::externalAuthToken();
         });
 
-        \Illuminate\Support\Facades\Route::group([], function () {
+        \Illuminate\Support\Facades\Route::group(['middleware' => ['auth:sanctum']], function () {
             Routes::userProfile();
             Routes::internalUserProfile();
-            Routes::externalUserProfile();
+            Routes::userManagement();
+            Routes::employeeManagement();
         });
     }
 }
