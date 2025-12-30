@@ -12,13 +12,14 @@ return [
 
     'database_connection' => env('AUTH_DB_CONNECTION', 'pgsql'),
 
+    'schema' => env('AUTH_DB_SCHEMA', 'account'),
+
     'hashing_password_before_attempt' => env('BERRY_AUTH_HASH_PASSWORD', true),
 
     'models' => [
         'user' => \Gomu\Auth\Models\User::class,
         'employee' => \Gomu\Auth\Models\Employee::class,
         'department' => \Gomu\Auth\Models\Department::class,
-        'role' => \Gomu\Auth\Models\Role::class,
         'permission' => \Gomu\Auth\Models\Permission::class,
         'job_level' => \Gomu\Auth\Models\JobLevel::class,
         'job_position' => \Gomu\Auth\Models\JobPosition::class,

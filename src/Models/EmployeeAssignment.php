@@ -11,9 +11,16 @@ class EmployeeAssignment extends Model
 {
     use SoftDeletes;
 
+    protected $connection = 'auth';
+
     public $incrementing = false;
     protected $keyType = 'string';
     protected $table = 'employee_assignments';
+
+    public function getTable()
+    {
+        return config('gomu-auth.schema', 'account') . '.' . $this->table;
+    }
 
     protected $fillable = [
         'id',

@@ -11,9 +11,16 @@ class Department extends Model
 {
     use SoftDeletes;
 
+    protected $connection = 'auth';
+
     public $incrementing = false;
     protected $keyType = 'string';
     protected $table = 'departments';
+
+    public function getTable()
+    {
+        return config('gomu-auth.schema', 'account') . '.' . $this->table;
+    }
 
     protected $fillable = [
         'id',

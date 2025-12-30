@@ -24,8 +24,7 @@ class UserAuthServiceProvider extends PackageServiceProvider
                 '2025_12_18_000007_create_job_positions_table',
                 '2025_12_18_000008_create_employees_table',
                 '2025_12_18_000011_create_employee_assignments_table',
-            ])
-            ->hasRoutes('api');
+            ]);
     }
 
     public function packageRegistered(): void

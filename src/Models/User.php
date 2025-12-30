@@ -20,6 +20,14 @@ class User extends Authenticatable implements FilamentUser, HasName
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, SoftDeletes, HasApiTokens;
 
+    protected $connection = 'auth';
+    protected $table = 'users';
+
+    public function getTable()
+    {
+        return config('gomu-auth.schema', 'account') . '.' . $this->table;
+    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -102,11 +110,11 @@ class User extends Authenticatable implements FilamentUser, HasName
         $counter = 1;
 
         // Find the next available NIP for today via employees table
-        while (Employee::where('nip', $today . str_pad($counter, 3, '0', STR_PAD_LEFT))->exists()) {
+        while (Employee::where('nip', $today . str_pad((string)$counter, 3, '0', STR_PAD_LEFT))->exists()) {
             $counter++;
         }
 
-        return $today . str_pad($counter, 3, '0', STR_PAD_LEFT);
+        return $today . str_pad((string)$counter, 3, '0', STR_PAD_LEFT);
     }
 
     /**
@@ -126,10 +134,10 @@ class User extends Authenticatable implements FilamentUser, HasName
     }
 
     // Relationships
-    public function role()
-    {
-        return $this->belongsTo(Role::class);
-    }
+    // public function role()
+    // {
+    //     return $this->belongsTo(Role::class);
+    // }
 
     // Link back to the employee profile (one-to-one)
     public function employee()

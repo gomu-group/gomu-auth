@@ -11,9 +11,16 @@ class JobPosition extends Model
 {
     use SoftDeletes;
 
+    protected $connection = 'auth';
+
     public $incrementing = false;
     protected $keyType = 'string';
     protected $table = 'job_positions';
+
+    public function getTable()
+    {
+        return config('gomu-auth.schema', 'account') . '.' . $this->table;
+    }
 
     protected $fillable = [
         'id',
