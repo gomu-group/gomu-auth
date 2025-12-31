@@ -14,7 +14,15 @@ return [
 
     'schema' => env('AUTH_DB_SCHEMA', 'account'),
 
-    'hashing_password_before_attempt' => env('BERRY_AUTH_HASH_PASSWORD', true),
+    'hashing_password_before_attempt' => env('AUTH_HASH_PASSWORD', true),
+
+    'passport' => [
+        'enabled' => env('AUTH_PASSPORT_ENABLED', false),
+        'base_url' => env('AUTH_PASSPORT_BASE_URL'),
+        'client_id' => env('AUTH_PASSPORT_CLIENT_ID'),
+        'client_secret' => env('AUTH_PASSPORT_CLIENT_SECRET'),
+        'callback_url' => env('AUTH_PASSPORT_CALLBACK_URL'),
+    ],
 
     'models' => [
         'user' => \Gomu\Auth\Models\User::class,

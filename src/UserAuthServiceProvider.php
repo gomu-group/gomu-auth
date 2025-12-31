@@ -52,6 +52,10 @@ class UserAuthServiceProvider extends PackageServiceProvider
             Routes::internalUserProfile();
             Routes::userManagement();
             Routes::employeeManagement();
+            Routes::userToken();
         });
+
+        // OAuth Passport routes (without auth middleware)
+        Routes::passport();
     }
 }

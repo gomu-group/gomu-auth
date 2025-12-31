@@ -162,9 +162,18 @@ class UserControllerTest extends TestCase
 
     public function test_user_can_search_users(): void
     {
-        User::factory()->create(['email' => 'john@example.com']);
-        User::factory()->create(['email' => 'jane@example.com']);
-        User::factory()->create(['email' => 'bob@example.com']);
+        User::factory()->create([
+            'email' => 'john@example.com',
+            'username' => 'johndoe'
+        ]);
+        User::factory()->create([
+            'email' => 'jane@example.com',
+            'username' => 'janesmith'
+        ]);
+        User::factory()->create([
+            'email' => 'bob@example.com',
+            'username' => 'bobwilson'
+        ]);
 
         $response = $this->withToken($this->adminToken)
             ->getJson('/users?search=john');

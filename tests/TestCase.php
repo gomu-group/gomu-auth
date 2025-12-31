@@ -17,6 +17,28 @@ abstract class TestCase extends Testbench\TestCase
         // Load migrations for testing
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
         $this->loadMigrationsFrom(__DIR__ . '/../vendor/laravel/sanctum/database/migrations');
+
+        // Register routes for testing
+        $this->registerRoutes();
+    }
+
+    protected function registerRoutes(): void
+    {
+        // Register routes with auth prefix for testing
+        \Illuminate\Support\Facades\Route::group(['prefix' => 'auth'], function () {
+            \Gomu\Auth\Routes::authToken();
+            \Gomu\Auth\Routes::internalAuthToken();
+            \Gomu\Auth\Routes::externalAuthToken();
+            \Gomu\Auth\Routes::userToken();
+            \Gomu\Auth\Routes::passport();
+        });
+
+        \Illuminate\Support\Facades\Route::group(['middleware' => ['auth:sanctum']], function () {
+            \Gomu\Auth\Routes::userProfile();
+            \Gomu\Auth\Routes::internalUserProfile();
+            \Gomu\Auth\Routes::userManagement();
+            \Gomu\Auth\Routes::employeeManagement();
+        });
     }
     protected function getPackageProviders($app): array
     {

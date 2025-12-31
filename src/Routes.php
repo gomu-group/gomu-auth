@@ -54,4 +54,18 @@ final class Routes
     {
         Route::apiResource('employees', EmployeeController::class);
     }
+
+    public static function userToken(): void
+    {
+        Route::middleware('auth:sanctum')->group(function () {
+            Route::get('/user-token', [\Gomu\Auth\Http\Controllers\UserTokenController::class, 'index']);
+            Route::delete('/user-token/{tokenId}', [\Gomu\Auth\Http\Controllers\UserTokenController::class, 'destroy']);
+        });
+    }
+
+    public static function passport(): void
+    {
+        Route::get('/oauth/passport/redirect', [\Gomu\Auth\Http\Controllers\Passport\RedirectController::class, 'create']);
+        Route::get('/oauth/passport/callback', [\Gomu\Auth\Http\Controllers\Passport\CallbackController::class, 'store']);
+    }
 }
