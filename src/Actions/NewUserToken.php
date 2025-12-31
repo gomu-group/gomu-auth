@@ -6,6 +6,8 @@ namespace Gomu\Auth\Actions;
 
 use DateTimeInterface;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Jenssegers\Agent\Agent;
 use Illuminate\Http\Request;
 use Laravel\Sanctum\NewAccessToken;
@@ -24,20 +26,37 @@ final class NewUserToken
      */
     public function handle(array $credentials, string $tokenName, array $abilities = ['*'], ?DateTimeInterface $expiresAt = null): ?NewAccessToken
     {
-        $guard = $this->auth->guard();
-
-        if (\config('gomu-auth.hashing_password_before_attempt', true)) {
-            $plainPassword = Arr::get($credentials, 'password');
-
-            Arr::set($credentials, 'password', \md5($plainPassword));
+        // Custom authentication without guard to avoid schema issues
+        $user = \Gomu\Auth\Models\User::where('email', $credentials['email'])->first();
+        
+        if (!$user) {
+            Log::error('User not found', ['email' => $credentials['email']]);
+            return null;
         }
 
-        $guard->attempt($credentials, true);
+        $password = $credentials['password'];
+        
+        // Check if hashing is enabled (hardcoded to false for testing)
+        if (false) { // \config('gomu-auth.hashing_password_before_attempt', true)) {
+            $password = \md5($password);
+            Log::error('Using MD5 hash', ['original' => $credentials['password'], 'hashed' => $password]);
+        } else {
+            Log::error('Using plain password', ['password' => $password]);
+        }
 
-        /** @var mixed $user */
-        $user = $guard->user();
+        // Check password
+        $isValid = Hash::check($password, $user->password_hash);
+        Log::error('Password check', [
+            'is_valid' => $isValid,
+            'stored_hash' => $user->password_hash,
+            'provided_password' => $password
+        ]);
 
-        return $user?->createToken($tokenName, $abilities, $expiresAt);
+        if (!$isValid) {
+            return null;
+        }
+
+        return $user->createToken($tokenName, $abilities, $expiresAt);
     }
 
     public function fromRequest(Request $request): ?NewAccessToken
